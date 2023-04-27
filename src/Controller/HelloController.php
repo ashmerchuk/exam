@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\Bike;
+use App\Service\TodoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,43 +19,29 @@ class HelloController extends AbstractController
 
     public function list_items(Request $request): Response
     {
-
-        if (isset($_COOKIE['skills'])) {
-            $addedSkills = explode('~', $_COOKIE['skills']);
-            foreach ($addedSkills as $value) {
-                if ($value != '')
-                    $this->skills[] = $value;
-            }
-        }
+        $todoService = new TodoService();
 
         return $this->render(
             'hello/hello.html.twig',
             [
-                'name' => $this->name,
-                'job' => $this->job,
-                'skills' => $this->skills,
+                'skills' =>  $todoService->get_all_todos(),
             ]
         );
     }
     public function add_items(Request $request)
     {
-        if (isset($_COOKIE['skills'])) {
-            $nameOfSkill = $_POST['nameOfSkill'];
-            $nameOfSkill = str_replace('~','',$nameOfSkill);
-            if ($nameOfSkill != '') {
-                $_COOKIE['skills'] = $_COOKIE['skills'] . '~' . $nameOfSkill;
-                setcookie('skills', $_COOKIE['skills']);
-            }
-        } else {
-            setcookie('skills', $_POST['nameOfSkill']);
-        }
+        $nameOfSkill = $request->get('nameOfSkill');
+//        dd($nameOfSkill);
+
+        $todoService = new TodoService();
+        $todoService->add_todo($nameOfSkill);
         return new RedirectResponse('/list');
     }
     public function delete_items(Request $request)
     {
-            $skillsArray = explode("~", $_COOKIE['skills']);
-            array_splice($skillsArray, $_POST['index'], 1);
-            setcookie('skills', implode("~", $skillsArray));
+        $indexOfRemoving = $request->get('name');
+        $todoService = new TodoService();
+        $todoService->delete_todo($indexOfRemoving);
         return new RedirectResponse('/list');
     }
 }
