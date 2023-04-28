@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Service\Bike;
-use App\Service\TodoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,29 +17,43 @@ class HelloController extends AbstractController
 
     public function list_items(Request $request): Response
     {
-        $todoService = new TodoService();
+
+        if (isset($_COOKIE['skills'])) {
+            $addedSkills = explode('~', $_COOKIE['skills']);
+            foreach ($addedSkills as $value) {
+                if ($value != '')
+                    $this->skills[] = $value;
+            }
+        }
 
         return $this->render(
             'hello/hello.html.twig',
             [
-                'skills' =>  $todoService->get_all_todos(),
+                'name' => $this->name,
+                'job' => $this->job,
+                'skills' => $this->skills,
             ]
         );
     }
     public function add_items(Request $request)
     {
-        $nameOfSkill = $request->get('nameOfSkill');
-//        dd($nameOfSkill);
-
-        $todoService = new TodoService();
-        $todoService->add_todo($nameOfSkill);
+        if (isset($_COOKIE['skills'])) {
+            $nameOfSkill = $_POST['nameOfSkill'];
+            $nameOfSkill = str_replace('~','',$nameOfSkill);
+            if ($nameOfSkill != '') {
+                $_COOKIE['skills'] = $_COOKIE['skills'] . '~' . $nameOfSkill;
+                setcookie('skills', $_COOKIE['skills']);
+            }
+        } else {
+            setcookie('skills', $_POST['nameOfSkill']);
+        }
         return new RedirectResponse('/list');
     }
     public function delete_items(Request $request)
     {
-        $indexOfRemoving = $request->get('name');
-        $todoService = new TodoService();
-        $todoService->delete_todo($indexOfRemoving);
+            $skillsArray = explode("~", $_COOKIE['skills']);
+            array_splice($skillsArray, $_POST['index'], 1);
+            setcookie('skills', implode("~", $skillsArray));
         return new RedirectResponse('/list');
     }
 }

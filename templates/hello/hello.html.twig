@@ -1,5 +1,7 @@
 <div>
     <h1 style="color: orange">Hello moebel!</h1>
+    <pre>Name: {{ name }}</pre>
+    <pre>Job: {{ job }}</pre>
     <h2>Skills:</h2>
     {% for skill in skills%}
         <ul>
@@ -7,7 +9,7 @@
                 {% autoescape false %}
                     <form method="post" action="{{ path('delete_items') }}">
                         {{ skill }}
-                        <input type="hidden" name="name" value="{{ skill }}">
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
                         <button type="submit"> Delete! </button>
                     </form>
                 {% endautoescape %}
