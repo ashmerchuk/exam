@@ -9,6 +9,7 @@
         "php": ">=8.1.18",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/dbal": "^3.6",
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
@@ -21,7 +22,8 @@
         "symfony/runtime": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/yaml": "6.2.*",
-        "twig/extra-bundle": "*"
+        "twig/extra-bundle": "*",
+        "ext-pdo": "*"
     },
     "config": {
         "allow-plugins": {

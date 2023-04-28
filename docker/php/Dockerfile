@@ -6,3 +6,9 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 
 RUN mv composer.phar /usr/local/bin/composer
+
+# Install SQLite
+RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev
+
+# Install the PDO SQLite extension for PHP
+RUN docker-php-ext-install pdo_sqlite
