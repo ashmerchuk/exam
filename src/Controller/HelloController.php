@@ -13,7 +13,7 @@ use function PHPUnit\Framework\isEmpty;
 class HelloController extends AbstractController
 {
     private $skills = [];
-    private $file;
+//    private $skills = ['HTML', 'CSS', 'JS', 'PHP'];
     private $name = 'Andrii';
     private $job = 'Software Developer';
 
@@ -31,6 +31,8 @@ class HelloController extends AbstractController
     public function add_items(Request $request)
     {
         $nameOfSkill = $request->get('nameOfSkill');
+//        dd($nameOfSkill);
+
         $todoService = new TodoService();
         $todoService->add_todo($nameOfSkill);
         return new RedirectResponse('/list');

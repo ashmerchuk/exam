@@ -4,26 +4,17 @@ namespace App\Repository;
 
 class TodoFileRepository
 {
-        public function get_all_todos(){
-        $file = "testfile.txt";
-        if (file_exists($file) && filesize($file) !== 0) {
-            $file_content = file_get_contents($file);
-            return explode("\n", $file_content);
-        } else {
-            return [];
+    public function get_all_todos(){
+        if (isset($_COOKIE['todos'])) {
+            return explode('~', $_COOKIE['todos']);
         }
+        return [];
     }
     public function save_todo(string $todo){
-        $file = "testfile.txt";
-        if (filesize($file) === 0) {
-            file_put_contents($file, $todo);
-        }
-        else{
-            file_put_contents($file, file_get_contents($file) . "\n" . $todo);
-        }
+        $_COOKIE['todos'] = $_COOKIE['todos'] . '~' . $todo;
+        setcookie('todos', $_COOKIE['todos']);
     }
     public function delete_todo(string $todo){
-        $file = "testfile.txt";
         $skillsArray = $this->get_all_todos();
         foreach ($skillsArray as $index=>$todoForDelete){
             if($todo === $todoForDelete){
@@ -31,7 +22,7 @@ class TodoFileRepository
                 break;
             }
         }
-        file_put_contents($file, implode("\n", $skillsArray));
+        setcookie('todos', implode("~", $skillsArray));
     }
 }
 
