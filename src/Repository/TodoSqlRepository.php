@@ -13,19 +13,25 @@ class TodoSqlRepository
     }
     public function get_all_todos()
     {
-        $stmt = $this->pdo->query('SELECT nameOfTodo FROM allSKills');
-        $results = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        return $results;
+
+        $stmt = $this->pdo->prepare('SELECT nameOfTodo FROM allSKills');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
     }
 
     public function save_todo(string $todo)
     {
-        $this->pdo->query("INSERT INTO allSKills (nameOfTodo) VALUES ('$todo')");
+        $stmt = $this->pdo->prepare('INSERT INTO allSKills (nameOfTodo) VALUES (:todo)');
+        $stmt->bindParam(':todo', $todo);
+        $stmt->execute();
     }
 
     public function delete_todo(string $todo)
     {
-        $this->pdo->query("DELETE FROM allSKills WHERE nameOfTodo = '$todo'");
+        $stmt = $this->pdo->prepare('DELETE FROM allSKills WHERE nameOfTodo = :todo');
+        $stmt->bindParam(':todo', $todo);
+        $stmt->execute();
     }
 }
+

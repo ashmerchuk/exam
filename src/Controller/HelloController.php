@@ -12,10 +12,6 @@ use function PHPUnit\Framework\isEmpty;
 
 class HelloController extends AbstractController
 {
-    private $skills = [];
-    private $file;
-    private $name = 'Andrii';
-    private $job = 'Software Developer';
 
     public function list_items(Request $request): Response
     {
