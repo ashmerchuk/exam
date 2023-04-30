@@ -9,6 +9,7 @@
         "php": ">=8.1.18",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-pdo": "*",
         "doctrine/dbal": "^3.6",
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -22,8 +23,7 @@
         "symfony/runtime": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/yaml": "6.2.*",
-        "twig/extra-bundle": "*",
-        "ext-pdo": "*"
+        "twig/extra-bundle": "*"
     },
     "config": {
         "allow-plugins": {
@@ -75,6 +75,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/debug-bundle": "6.2.*",
         "symfony/maker-bundle": "^1.48",
         "symfony/stopwatch": "6.2.*",

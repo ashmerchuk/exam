@@ -6,8 +6,8 @@
             <li>
                 {% autoescape false %}
                     <form method="post" action="{{ path('delete_items') }}">
-                        {{ skill }}
-                        <input type="hidden" name="name" value="{{ skill }}">
+                        {{ skill.name }}
+                        <input type="hidden" name="nameOfSkill" value="{{ skill.name }}">
                         <button type="submit"> Delete! </button>
                     </form>
                 {% endautoescape %}

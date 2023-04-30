@@ -13,7 +13,6 @@ class TodoSqlRepository
     }
     public function get_all_todos()
     {
-
         $stmt = $this->pdo->prepare('SELECT nameOfTodo FROM allSKills');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);

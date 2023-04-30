@@ -4,14 +4,15 @@ namespace App\Service;
 
 use App\Repository\TodoCookieRepository;
 use App\Repository\TodoFileRepository;
+use App\Repository\TodoPostgresRepository;
 use App\Repository\TodoSqlRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TodoService
 {
-    private TodoSqlRepository $Repository;
+    private TodoPostgresRepository $Repository;
     public function __construct(){
-        $this->Repository = new TodoSqlRepository();
+        $this->Repository = new TodoPostgresRepository();
     }
     public function add_todo(string $sanitaseNameOfSkill)
     {

@@ -1,41 +1,51 @@
 <?php
-
 namespace App\Controller;
 
-use App\Service\Bike;
+use App\Entity\Skills;
+use App\Repository\SkillsRepository;
 use App\Service\TodoService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use function PHPUnit\Framework\isEmpty;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HelloController extends AbstractController
 {
+    private $entityManager;
 
-    public function list_items(Request $request): Response
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $todoService = new TodoService();
+        $this->entityManager = $entityManager;
+    }
 
+
+    public function list_items(SkillsRepository $skillsRepository): Response
+    {
+        $skillsRepository = $this->entityManager->getRepository(Skills::class);
+        $skills = $skillsRepository->findAll();
         return $this->render(
             'hello/hello.html.twig',
             [
-                'skills' =>  $todoService->get_all_todos(),
+                'skills' =>  $skills,
             ]
         );
     }
     public function add_items(Request $request)
     {
-        $nameOfSkill = $request->get('nameOfSkill');
-        $todoService = new TodoService();
-        $todoService->add_todo($nameOfSkill);
+        $todoService = new Skills();
+        $todoService->setName($request->get('nameOfSkill'));
+        $this->entityManager->persist($todoService);
+        $this->entityManager->flush();
+
         return new RedirectResponse('/list');
     }
     public function delete_items(Request $request)
     {
-        $indexOfRemoving = $request->get('name');
-        $todoService = new TodoService();
-        $todoService->delete_todo($indexOfRemoving);
+        $skillsRepository = $this->entityManager->getRepository(Skills::class);
+        $skillsRepository->delete($request->get('nameOfSkill'));
+
         return new RedirectResponse('/list');
     }
 }
