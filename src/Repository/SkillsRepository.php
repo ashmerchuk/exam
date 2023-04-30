@@ -20,7 +20,6 @@ class SkillsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Skills::class);
     }
-ª
     public function save(Skills $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -46,9 +45,18 @@ class SkillsRepository extends ServiceEntityRepository
     {
         $dql = 'DELETE FROM App\Entity\Skills s WHERE s.name = :value';
         $query = $this->getEntityManager()->createQuery($dql)
-        ->setParameter('value', $value);
+            ->setParameter('value', $value);
         $query->getResult();
         return [];
+    }
+    /**
+     * @return Skills[] Returns an array of Skills objects
+     */
+    public function selectAll(): array
+    {
+        $dql = 'SELECT DISTINCT name.id, name.name FROM App\Entity\Skills name ORDER BY name.id ASC';
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
     }
 
 //    public function findOneBySomeField($value): ?Skills

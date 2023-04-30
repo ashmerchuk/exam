@@ -24,7 +24,7 @@ class HelloController extends AbstractController
     public function list_items(SkillsRepository $skillsRepository): Response
     {
         $skillsRepository = $this->entityManager->getRepository(Skills::class);
-        $skills = $skillsRepository->findAll();
+        $skills = $skillsRepository->selectAll();
         return $this->render(
             'hello/hello.html.twig',
             [
@@ -45,7 +45,6 @@ class HelloController extends AbstractController
     {
         $skillsRepository = $this->entityManager->getRepository(Skills::class);
         $skillsRepository->delete($request->get('nameOfSkill'));
-
         return new RedirectResponse('/list');
     }
 }
