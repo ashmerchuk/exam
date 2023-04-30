@@ -20,7 +20,7 @@ class SkillsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Skills::class);
     }
-
+ª
     public function save(Skills $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
