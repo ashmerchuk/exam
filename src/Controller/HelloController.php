@@ -36,6 +36,7 @@ class HelloController extends AbstractController
     {
         $todoService = new Skills();
         $todoService->setName($request->get('nameOfSkill'));
+        $todoService->setText($request->get('text'));
         $this->entityManager->persist($todoService);
         $this->entityManager->flush();
 
@@ -44,7 +45,7 @@ class HelloController extends AbstractController
     public function delete_items(Request $request)
     {
         $skillsRepository = $this->entityManager->getRepository(Skills::class);
-        $skillsRepository->delete($request->get('nameOfSkill'));
+        $skillsRepository->delete($request->get('index'));
         return new RedirectResponse('/list');
     }
 }

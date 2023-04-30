@@ -6,8 +6,9 @@
             <li>
                 {% autoescape false %}
                     <form method="post" action="{{ path('delete_items') }}">
-                        {{ skill.name }}
-                        <input type="hidden" name="nameOfSkill" value="{{ skill.name }}">
+                        {{ skill.name }}<br>
+                        {{ skill.text }}
+                        <input type="hidden" name="index" value="{{ skill.id }}">
                         <button type="submit"> Delete! </button>
                     </form>
                 {% endautoescape %}
@@ -15,8 +16,13 @@
         </ul>
     {% endfor %}
     <form method="post" action="{{ path('save_items') }}">
-        <input type="text" name="nameOfSkill" placeholder="Add new skills">
+        <input type="text" name="nameOfSkill" placeholder="Add new skills"><br><br>
+        <textarea name="text" rows="4" placeholder="Add description of your skills"></textarea>
         <button type="submit">Add</button>
     </form>
+{#    <form method="post" action="{{ path('save_items') }}">#}
+{#        <input type="text" name="infoOfSkill" placeholder="Add new skills">#}
+{#        <button type="submit">Add</button>#}
+{#    </form>#}
     {#    <script>        alert("haha i hacked you")    </script>#}
 </div>

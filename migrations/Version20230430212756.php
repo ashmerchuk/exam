@@ -10,18 +10,17 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230430004053 extends AbstractMigration
+final class Version20230430212756 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'moin!!';
+        return '';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migrations is auto-generated, please modify it to your needs
-        $this->addSql("CREATE TABLE IF NOT EXISTS allSkills (id SERIAL PRIMARY KEY, nameOfTodo VARCHAR(255) NOT NULL, textOfTodo VARCHAR(255) NOT NULL)");
-
+        $this->addSql("CREATE TABLE IF NOT EXISTS allSkills (id SERIAL PRIMARY KEY, nameOfTodo VARCHAR(255) NOT NULL)");
     }
 
     public function down(Schema $schema): void

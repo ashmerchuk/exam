@@ -30,7 +30,7 @@ class TodoPostgresRepository
 
     public function save_todo(string $todo)
     {
-        $stmt = $this->pdo->prepare('INSERT INTO allSKills (nameOfTodo) VALUES (:todo)');
+        $stmt = $this->pdo->prepare('INSERT INTO sKills (name) VALUES (:todo)');
         $stmt->bindParam(':todo', $todo);
         $stmt->execute();
     }

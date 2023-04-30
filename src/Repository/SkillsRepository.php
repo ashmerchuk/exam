@@ -43,7 +43,7 @@ class SkillsRepository extends ServiceEntityRepository
      */
     public function delete($value): array
     {
-        $dql = 'DELETE FROM App\Entity\Skills s WHERE s.name = :value';
+        $dql = 'DELETE FROM App\Entity\Skills s WHERE s.id = :value';
         $query = $this->getEntityManager()->createQuery($dql)
             ->setParameter('value', $value);
         $query->getResult();
@@ -54,7 +54,7 @@ class SkillsRepository extends ServiceEntityRepository
      */
     public function selectAll(): array
     {
-        $dql = 'SELECT DISTINCT name.id, name.name FROM App\Entity\Skills name ORDER BY name.id ASC';
+        $dql = 'SELECT name.id, name.name, name.text FROM App\Entity\Skills name ORDER BY name.id ASC';
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
